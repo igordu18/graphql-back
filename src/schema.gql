@@ -1,0 +1,110 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Cartao {
+  id: String!
+  numero: String!
+  cvv: String!
+  validade: String!
+  tipo: String!
+  modalidade: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  propostaId: String!
+  clienteId: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Proposta {
+  id: String!
+  status: String!
+  etapa: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  idCliente: String!
+  cartao: Cartao!
+}
+
+type Cliente {
+  id: String!
+  nome: String!
+  email: String!
+  cpf: String!
+  dataNascimento: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  propostas: [Proposta!]!
+  cartoes: [Cartao!]!
+}
+
+type Query {
+  cartoes: [Cartao!]!
+  cartao(id: String!): Cartao!
+  clientes: [Cliente!]!
+  cliente(id: String!): Cliente!
+  propostas: [Proposta!]!
+  proposta(id: String!): Proposta!
+}
+
+type Mutation {
+  createCartao(createCartaoInput: CreateCartaoInput!): Cartao!
+  updateCartao(updateCartaoInput: UpdateCartaoInput!): Cartao!
+  removeCartao(id: String!): Cartao!
+  createCliente(createClienteInput: CreateClienteInput!): Cliente!
+  updateCliente(updateClienteInput: UpdateClienteInput!): Cliente!
+  removeCliente(id: String!): Cliente!
+  createProposta(createPropostaInput: CreatePropostaInput!): Proposta!
+  updateProposta(updatePropostaInput: UpdatePropostaInput!): Proposta!
+  removeProposta(id: String!): Proposta!
+}
+
+input CreateCartaoInput {
+  tipo: String!
+  modalidade: String!
+  propostaId: String!
+  clienteId: String!
+}
+
+input UpdateCartaoInput {
+  tipo: String!
+  modalidade: String!
+  propostaId: String!
+  clienteId: String!
+  id: String!
+  numero: String!
+  cvv: String!
+  validade: String!
+}
+
+input CreateClienteInput {
+  nome: String!
+  email: String!
+  cpf: String!
+  dataNascimento: String!
+}
+
+input UpdateClienteInput {
+  nome: String!
+  email: String!
+  cpf: String!
+  dataNascimento: String!
+  id: String!
+}
+
+input CreatePropostaInput {
+  status: String!
+  etapa: String!
+  idCliente: String!
+}
+
+input UpdatePropostaInput {
+  status: String!
+  etapa: String!
+  idCliente: String!
+  id: String!
+}

@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Cliente {
+  id             String    @id @default(uuid())
+  nome           String    @unique
+  email          String    @unique
+  cpf            String    @unique
+  dataNascimento DateTime  @map("data_nascimento")
+  endereco       String
+  dividaAtiva    Boolean   @map("divida_ativa")
+  valorDivida    Float?    @map("valor_divida")
+  clienteAtivo   Boolean   @map("cliente_ativo")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime? @updatedAt @map("updated_at")
+
+  propostas Proposta[]
+}
+
+model Proposta {
+  id            String @id @default(uuid())
+  status        String
+  motivo        String
+  valorEmDebito Float  @map("valor_em_debito")
+  multa         Float
+  desconto      Float
+  valorPago     Float? @map("valor_pago")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  cliente   Cliente @relation(fields: [idCliente], references: [id])
+  idCliente String  @map("id_cliente")
+}
